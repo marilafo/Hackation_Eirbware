@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
   circleButton: {
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor:'#1c73ff',
+    backgroundColor:'#fff',
     borderRadius:50,
     height: 100,
   },
   text: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: 'white'
+    color: '#1c73ff'
   },
 })
