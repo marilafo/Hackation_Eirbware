@@ -58,7 +58,7 @@ def process(req):
         speech += " Would you rather" + choice[0] + " or " + choice[1] + str(state)
 
         # Sends choices to client
-        emit('wyr_ask', {"A": choice[0], "B": choice[1]})
+        socketio.emit('wyr_ask', {"A": choice[0], "B": choice[1]})
 
         state = State.WYR_WAIT
 
