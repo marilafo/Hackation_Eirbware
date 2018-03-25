@@ -60,7 +60,7 @@ def processRequest(req):
 def processAction(action):
     code = action.pop(0)
 
-    if code == WOULD_YOU_RATHER:
+    # if code == WOULD_YOU_RATHER:
 
 
 def start_game():
