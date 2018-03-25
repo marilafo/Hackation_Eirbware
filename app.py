@@ -11,6 +11,7 @@ from flask import make_response
 app = Flask(__name__)
 
 CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
+WOULD_YOU_RATHER = 1
 
 def sendEvent():
     ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
@@ -57,9 +58,12 @@ def processRequest(req):
 def processAction(action):
     code = action.pop(0)
 
+    if code == WOULD_YOU_RATHER:
+
 
 
 if __name__ == '__main__':
+    print("hey")
     app.run(debug=True, use_reloader=True)
-    print "coucou"
+    print("coucou")
     sendEvent()
