@@ -50,7 +50,8 @@ def processRequest(req):
     intent = req["result"]["metadata"]["intentName"]
 
     if intent == 'start_playing' or intent == 'next_game':
-        speech = processAction([1, 1, "Eating a pizza", "Sleeping"])
+        action = getAction()
+        speech = processAction(action)
 
     print("Response:")
     print(speech)
@@ -61,6 +62,9 @@ def processRequest(req):
         # "contextOut": [],
     }
 
+def getAction():
+    # TODO query server to get the next action
+    return [1, 1, "Eat a pizza", "Get some sleep"]
 
 def processAction(action):
     code = action.pop(0)
