@@ -1,6 +1,8 @@
 import apiai
 import json
 import os
+import sys
+
 
 from flask import Flask
 from flask import request
@@ -8,6 +10,20 @@ from flask import make_response
 
 app = Flask(__name__)
 
+CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
+
+def sendEvent():
+    ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
+
+    event = apiai.events.Event("PLAYER_JOINED")
+    request = ai.event_request(event)
+
+    request.lang = 'en'
+    request.session_id = "iefifhufhjfndsiff"
+
+    response = request.getresponse()
+    print (response.read())
+    return response.read()
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -25,7 +41,7 @@ def webhook():
     return r
 
 def processRequest(req):
-    speech = "coucou toi"
+    speech = "Hey"
     print("Response:")
     print(speech)
 
@@ -34,10 +50,10 @@ def processRequest(req):
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
     }
 
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
-
+    print "coucou"
+    sendEvent()
