@@ -70,5 +70,21 @@ class Game(object):
         self.nb_player = 0
         self.players = {}
 
+        self.wyr_answers = { "A" : "", "B": "", "nbA": 0, "nbB": 0 }
+
     def add_player(self, player, sessionid):
         self.players[sessionid] = player
+
+
+    # Updates Would You Rather choices
+    def update_wyr_choice(self, choiceA, choiceB):
+        self.wyr_answers["A"] = choiceA
+        self.wyr_answers["B"] = choiceB
+
+    # Saves player answer to Would You Rather
+    def add_wyr_answer(self, answer):
+        if answer == self.wyr_answers["A"]:
+            self.wyr_answers["nbA"]++
+
+        else if answer == self.wyr_answers["B"]:
+            self.wyr_answers["nbB"]++

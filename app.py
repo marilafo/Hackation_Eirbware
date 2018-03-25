@@ -61,7 +61,7 @@ def webhook():
 # def getAction():
 #     # TODO query server to get the next action
 #     return [1, 1, "Eat a pizza", "Get some sleep"]
-# 
+#
 # def processAction(action):
 #     code = action.pop(0)
 #
@@ -141,8 +141,10 @@ def info(json):
 
 @socketio.on('wyr_answer')
 def wyr_answer(json):
-    # handle response to tp game
+    # handle response to WYR game
     id = request.sid
+
+    # { "player": "choice" }
     data = json.loads(json)
 
 
