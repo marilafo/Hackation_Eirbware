@@ -88,3 +88,13 @@ class Game(object):
 
         else if answer == self.wyr_answers["B"]:
             self.wyr_answers["nbB"]++
+
+    def get_wyr_answer(self):
+        if self.wyr_answers["nbA"] > self.wyr_answers["nbB"]:
+            return self.wyr_answers["A"]
+
+        elif self.wyr_answers["nbA"] < self.wyr_answers["nbB"]:
+            return self.wyr_answers["B"]
+
+        else
+            return "It's a draw!"
