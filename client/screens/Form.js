@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import { ScrollView, StyleSheet, Text, View, Picker } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import SubmitButton from '../elements/buttons/SubmitButton';
+import CancelButton from '../elements/buttons/CancelButton';
+import SocketIOClient from 'socket.io-client';
 
 export default class Form extends Component {
   static navigationOptions = {
@@ -90,19 +92,37 @@ export default class Form extends Component {
       this.fifth.blur();
     }
 
+    onReady() {
+      console.log("here you can handle connection and then navigation to the next screen");
+      socket = SocketIOClient('https://eirbware-hackathon.herokuapp.com');
+
+      socket.on("connect", () => {
+          console.log("connected");
+          socket.emit("info", this.state);
+          // go to mini games
+        }
+      )
+    }
+
     onSubmit() {
       let errors = {};
+      let count = 0;
 
       ['name', 'first', 'second', 'third', 'fourth','fifth']
-        .forEach((name) => {
-          let value = this[name].value();
+      .forEach((name) => {
+        let value = this[name].value();
 
-          if (!value) {
-            errors[name] = 'Should not be empty';
-          }
-        });
+        if (!value) {
+          errors[name] = 'Should not be empty';
+          count ++;
+        }
+      });
 
       this.setState({ errors });
+
+      if(count == 0){
+        this.onReady();
+      }
     }
 
     updateRef(name, ref) {
@@ -147,6 +167,7 @@ export default class Form extends Component {
               blurOnSubmit={true}
               label='First Clue'
               characterRestriction={140}
+              error={errors.first}
             />
 
             <TextField
@@ -160,6 +181,7 @@ export default class Form extends Component {
               blurOnSubmit={true}
               label='Second Clue'
               characterRestriction={140}
+              error={errors.second}
             />
 
             <TextField
@@ -173,6 +195,7 @@ export default class Form extends Component {
               blurOnSubmit={true}
               label='Third Clue'
               characterRestriction={140}
+              error={errors.third}
             />
 
             <TextField
@@ -186,6 +209,7 @@ export default class Form extends Component {
               blurOnSubmit={true}
               label='Fourth Clue'
               characterRestriction={140}
+              error={errors.fourth}
             />
 
             <TextField
@@ -199,6 +223,7 @@ export default class Form extends Component {
               blurOnSubmit={true}
               label='Fifth Clue'
               characterRestriction={140}
+              error={errors.fifth}
             />
           <Text>Hair:</Text>
           <Picker
@@ -232,12 +257,13 @@ export default class Form extends Component {
 
           </View>
 
-          <View style={styles.container}>
-            <View style={{flex: 1}} />
+          <View style={styles.containerButton}>
+            <CancelButton
+              onPress = { () => this.props.navigation.goBack()}
+              />
             <SubmitButton
               onPress = {this.onSubmit}
               />
-            <View style={{flex: 1}} />
           </View>
 
         </ScrollView>
@@ -264,6 +290,12 @@ const styles = StyleSheet.create({
   container: {
     margin: 8,
     marginTop: 24,
+  },
+
+  containerButton: {
+    margin: 8,
+    marginTop: 24,
+    flexDirection: 'row',
   },
 
   contentContainer: {

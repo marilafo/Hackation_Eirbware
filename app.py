@@ -3,44 +3,40 @@ import json
 import os
 import sys
 
-from multiprocessing import Process
+from threading import Thread
 
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 from flask import make_response
+from flask_socketio import SocketIO
+from flask_socketio import send, emit
+
+from game import *
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
 SUITCASE = 0
 WOULD_YOU_RATHER = 1
 COLLECTIVE = 2
 
-def sendEvent():
-    print("event")
-    ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
-
-    event = apiai.events.Event("PLAYER_JOINED")
-    request = ai.event_request(event)
-
-    request.lang = 'en'
-    request.session_id = "iefifhufhjfndsiff"
-
-    response = request.getresponse()
-    print (response.read())
-
+state = State.WAIT_PLAYERS
+game = Game()
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(json.dumps(req, indent=4))
 
-    res = processRequest(req)
+    #res = processRequest(req)
+    res = process(req)
     res = json.dumps(res, indent=4)
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
 
 def processRequest(req):
 
@@ -93,13 +89,80 @@ def processAction(action):
         return "Eat pizza"
 
 
+def process(req):
+    global state
+    speech = ""
+    intent = req["result"]["metadata"]["intentName"]
+
+    if state == State.WAIT_PLAYERS and intent == "start_playing":
+        speech = "Say next game to start a round." + str(state)
+        state = State.WAIT_NEW_ROUND
+    elif state == State.WAIT_NEW_ROUND and intent == "next_game":
+        speech = "A new round of the game Would You Rather will start!" + str(state)
+        choice = pick_wyr_array()
+        speech += "Would you rather" + choice[0] + " or " + choice[1] + str(state)
+        emit('wyr_ask', None)
+        state = State.WYR_WAIT
+    elif state == State.WYR_WAIT and intent == "round_end":
+        speech = "Losers are John and Levin."
+        speech += "Say next round to start a new round." + str(state)
+        state = State.WAIT_NEW_ROUND
+    else:
+        speech = "Query not understood."
+
+    return {
+        "speech": speech,
+        "displayText": speech
+    }
+
+
+@socketio.on('connect')
+def connect():
+    global game
+    # add a client
+    print("New client!!!")
+    id = request.sid
+    socket = request.namespace
+    p = Player(id, socket, "", [])
+    game.add_player(p, id)
+
+
+@socketio.on('info')
+def info(json):
+    global game
+    print("Information from client : " + str(json))
+    id = request.sid
+    data = json.loads(json)
+    game.players[id].name = data["name"]
+
+
+@socketio.on('wyr_answer')
+def wyr_answer(json):
+    # handle response to tp game
+    id = request.sid
+    data = json.loads(json)
+
+
+@socketio.on('team_answer')
+def team_answer(json):
+    # handle team answer
+    id = request.sid
+    data = json.loads(json)
+
+
+@socketio.on('story_answer')
+def story_answer(json):
+    # handle story answer
+    id = request.sid
+    data = json.loads(json)
+
+
 def start_game():
     print("Game started")
 
 
 if __name__ == '__main__':
-
-    p = Process(target=start_game, args=())
-    p.start()
-    app.run(debug=True, use_reloader=False)
-    p.join()
+    t = Thread(target=start_game, args=())
+    t.start()
+    socketio.run(app)
+    t.join()

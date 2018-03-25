@@ -43,7 +43,7 @@ clues_investigation_array = [
         ]
 
 
-Class Player(object):
+class Player(object):
     id = 0
     clues = []
     name = ""
@@ -52,7 +52,7 @@ Class Player(object):
     clues_pair = []
     clues_investigation = []
 
-    def __init__(seld, id, clues_list, name):
+    def __init__(self, id, clues_list, name):
         self.id = id
         self.clues = clues_list
         self.name = name
@@ -60,12 +60,16 @@ Class Player(object):
             clues_pair.append(0)
         for i in range(clues_investigation_array):
             clues_investigation.append(0)
-
-    def set_pairs(self, player_pair)
-        self.pair = player_pair
+        
 
     def get_name(self):
         return self.name
+<<<<<<< HEAD
+=======
+    
+    def set_pairs(self, player_pair):
+        self.pair = player_pair
+>>>>>>> 8f6db248b26d46c98078ff73d6948aa93fff085c
 
     def have_pair(self):
         return self.find_pair
@@ -74,7 +78,7 @@ Class Player(object):
         return self.pair == i
 
     def have_pair_clue(self, i):
-        return self.clues_pair[i] != 0:
+        return self.clues_pair[i] != 0
 
     def have_investigation_clue(self, i):
         return self.clues_investigation[i] != 0
@@ -86,7 +90,7 @@ Class Player(object):
         self.clues_investigation[i] = 1
 
 
-Class Game(object):
+class Game(object):
     nb_turn = 0
     nb_player = 0
     player_array = []
@@ -94,7 +98,6 @@ Class Game(object):
     def __init__(self,  players_array):
         self.nb_player = len(players_array)
         self.players_array = players_array
-
 
     #TODO : verifier que le nombre de joueurs est pair
     def select_pairs(self, players_array):
@@ -186,7 +189,7 @@ Class Game(object):
 
 
 
-    def run_collective(self, players_array)
+    def run_collective(self, players_array):
         looser = []
         l_to_send = [2,2]
 
@@ -234,7 +237,7 @@ Class Game(object):
 
 
     def run_turn(self, players_array):
-            looser = random.randrange(0, 3)
+        looser = random.randrange(0, 3)
         if mini_game == 0:
             looser = self.run_suitcase(players_array)
         elif mini_game == 1:
@@ -248,26 +251,32 @@ Class Game(object):
 
                     if not p.have_pair():
                         self.send_pair_clue(p)
-                    else
+                    else:
                         self.send_investigation_clue(p)
                 else:
                     self.send_investigation_clue(p)
 
         self.nb_turn = self.nb_turn + 1
+<<<<<<< HEAD
 
 
+=======
+                
+>>>>>>> 8f6db248b26d46c98078ff73d6948aa93fff085c
     #def ask_pair(self, players_array):
     #    for p in players_array:
 
-
-
     #def ask_solution(self, players_array):
     #    for p in players_array:
+<<<<<<< HEAD
     #        if
 
 
 
 
+=======
+    #        if 
+>>>>>>> 8f6db248b26d46c98078ff73d6948aa93fff085c
 
     def start_game(self, players_array):
         self.nb_turn = 0
@@ -279,8 +288,8 @@ Class Game(object):
         end = False
 
         while not end:
-            if (self.nb_turn == 3):
+            if (self.nb_turn % 3 == 0):
                 self.ask_pair(players_array)
-            elif (self.nb_turn == 5):
+            elif (self.nb_turn % 5 == 0):
                 self.ask_solution(players_array)
             end = self.run_turn(players_array)
