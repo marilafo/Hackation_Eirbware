@@ -12,7 +12,9 @@ from flask import make_response
 app = Flask(__name__)
 
 CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
+SUITCASE = 0
 WOULD_YOU_RATHER = 1
+COLLECTIVE = 2
 
 def sendEvent():
     print("event")
@@ -42,13 +44,13 @@ def webhook():
 
 def processRequest(req):
 
-    speech = "Hey"
+    speech = ""
 
     # Processes intent
     intent = req["result"]["metadata"]["intentName"]
-    print(intent)
+
     if intent == 'start_playing' or intent == 'next_game':
-        speech = "Play game"
+        speech = processAction([1, 1, "Eating a pizza", "Sleeping"])
 
     print("Response:")
     print(speech)
@@ -62,10 +64,29 @@ def processRequest(req):
 
 def processAction(action):
     code = action.pop(0)
-    # sendEvent()
 
+    # Game
+    if code == 1:
+        game = action.pop(0)
 
-    #if code == WOULD_YOU_RATHER:
+        if game == WOULD_YOU_RATHER:
+            a = action.pop(0)
+            b = action.pop(0)
+            return "Would you rather " + a + " or " + b + "?"
+
+        if game == SUITCASE:
+            # TODO treat parameters
+            return "In my suitcase there is..."
+
+        if game == COLLECTIVE:
+            # TODO treat parameters
+            return "Collective game"
+
+    elif code == 2:
+        return "Gage"
+
+    else:
+        return "Eat pizza"
 
 
 def start_game():
