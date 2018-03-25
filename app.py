@@ -30,9 +30,8 @@ def sendEvent():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    sendEvent()
     req = request.get_json(silent=True, force=True)
-
+    print "coucou"
     print(json.dumps(req, indent=4))
 
     # Processes intent
@@ -60,6 +59,7 @@ def processRequest(req):
 
 def processAction(action):
     code = action.pop(0)
+    # sendEvent()
 
 
     #if code == WOULD_YOU_RATHER:
