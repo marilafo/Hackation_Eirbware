@@ -30,6 +30,7 @@ export default class Form extends Component {
       this.fourthRef = this.updateRef.bind(this, 'fourth');
       this.fifthRef = this.updateRef.bind(this, 'fifth');
 
+      this.alreadyConnected = false;
 
       this.state = {
         name: 'Patxi',
@@ -93,29 +94,32 @@ export default class Form extends Component {
     }
 
     onReady() {
-      console.log("here you can handle connection and then navigation to the next screen");
-      socket = SocketIOClient('https://eirbware-hackathon.herokuapp.com');
+      if(!this.alreadyConnected) {
+        this.alreadyConnected = true;
+        console.log("here you can handle connection and then navigation to the next screen");
+        socket = SocketIOClient('https://eirbware-hackathon.herokuapp.com');
 
-      socket.once("connect", () => {
-          console.log("connected");
-          socket.emit("info", {
-            name: this.state.name,
-            clues: [
-              this.state.first,
-              this.state.second,
-              this.state.third,
-              this.state.fourth,
-              this.state.fifth,
-              this.state.hair,
-              this.state.eyes,
-              this.state.sex
-            ]
-          });
-          this.props.navigation.navigate('Wait',{
-            socket: socket,
-          })
-        }
-      )
+        socket.once("connect", () => {
+            console.log("connected");
+            socket.emit("info", {
+              name: this.state.name,
+              clues: [
+                this.state.first,
+                this.state.second,
+                this.state.third,
+                this.state.fourth,
+                this.state.fifth,
+                this.state.hair,
+                this.state.eyes,
+                this.state.sex
+              ]
+            });
+            this.props.navigation.navigate('Wait',{
+              socket: socket,
+            })
+          }
+        )
+      }
     }
 
     onSubmit() {
