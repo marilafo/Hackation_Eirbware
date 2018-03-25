@@ -12,6 +12,7 @@ from flask_socketio import SocketIO
 from flask_socketio import send, emit
 
 from game import *
+from utils_func import *
 
 app = Flask(__name__)
 socketio = SocketIO(app)
