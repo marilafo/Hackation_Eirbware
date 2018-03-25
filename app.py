@@ -47,6 +47,7 @@ def process(req):
         print("STATE: WAIT PLAYERS")
         speech = "Say next game to start a round." + str(state)
         state = State.WAIT_NEW_ROUND
+        print("PASSING IN STATE: WAIT PLAYERS")
 
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         print("STATE: WAIT NEW ROUND")
@@ -55,12 +56,13 @@ def process(req):
         # Save choices
         game.update_wyr_choice(choice[0], choice[1])
 
-        speech += " Would you rather" + choice[0] + " or " + choice[1] + str(state)
+        speech += " Would you rather " + choice[0] + " or " + choice[1] + str(state)
 
         # Sends choices to client
         socketio.emit('wyr_ask', {"A": choice[0], "B": choice[1]})
 
         state = State.WYR_WAIT
+        print("PASSING IN STATE: WYR WAIT")
 
     elif state == State.WYR_WAIT and intent == "round_end":
         print("STATE: WAIT WYR WAIT")
@@ -69,6 +71,7 @@ def process(req):
         speech += " Punishment for all losers: " + get_gage()
         speech += " Say next round to start a new round." + str(state)
         state = State.WAIT_NEW_ROUND
+        print("PASSING IN STATE: NEW ROUND")
 
     else:
         speech = "Query not understood."
