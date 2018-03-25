@@ -32,12 +32,12 @@ export default class Form extends Component {
 
 
       this.state = {
-        name: '',
-        first : '',
-        second : '',
-        third : '',
-        fourth : '',
-        fifth : '',
+        name: 'Patxi',
+        first : 'I am blue',
+        second : 'Da boo dee',
+        third : 'Unicorn',
+        fourth : 'white and blue',
+        fifth : 'Student in Enseirb',
         hair: '',
         eyes: '',
         sex: '',
@@ -96,7 +96,7 @@ export default class Form extends Component {
       console.log("here you can handle connection and then navigation to the next screen");
       socket = SocketIOClient('https://eirbware-hackathon.herokuapp.com');
 
-      socket.on("connect", () => {
+      socket.once("connect", () => {
           console.log("connected");
           socket.emit("info", this.state);
           // go to mini games
@@ -158,7 +158,7 @@ export default class Form extends Component {
 
             <TextField
               ref={this.firstRef}
-              value={data.about}
+              value={data.first}
               onFocus={this.onFocus}
               onChangeText={this.onChangeText}
               onSubmitEditing={this.onSubmitFirst}
@@ -172,7 +172,7 @@ export default class Form extends Component {
 
             <TextField
               ref={this.secondRef}
-              value={data.about}
+              value={data.second}
               onFocus={this.onFocus}
               onChangeText={this.onChangeText}
               onSubmitEditing={this.onSubmitSecond}
@@ -186,7 +186,7 @@ export default class Form extends Component {
 
             <TextField
               ref={this.thirdRef}
-              value={data.about}
+              value={data.third}
               onFocus={this.onFocus}
               onChangeText={this.onChangeText}
               onSubmitEditing={this.onSubmitThird}
@@ -200,7 +200,7 @@ export default class Form extends Component {
 
             <TextField
               ref={this.fourthRef}
-              value={data.about}
+              value={data.fourth}
               onFocus={this.onFocus}
               onChangeText={this.onChangeText}
               onSubmitEditing={this.onSubmitFourth}
@@ -214,7 +214,7 @@ export default class Form extends Component {
 
             <TextField
               ref={this.fifthRef}
-              value={data.about}
+              value={data.fifth}
               onFocus={this.onFocus}
               onChangeText={this.onChangeText}
               onSubmitEditing={this.onSubmitFifth}
