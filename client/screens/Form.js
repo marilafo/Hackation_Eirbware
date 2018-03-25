@@ -95,7 +95,8 @@ export default class Form extends Component {
     onReady() {
       console.log("here you can handle connection and then navigation to the next screen");
       socket = SocketIOClient('https://eirbware-hackathon.herokuapp.com');
-      socket.emit("connect", this.state);
+      
+      socket.emit("info", this.state);
 
       console.log("connected");
     }

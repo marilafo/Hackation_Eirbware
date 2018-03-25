@@ -117,7 +117,7 @@ def process(req):
 
 
 @socketio.on('connect')
-def connect(json):
+def connect():
     global game
     # add a client
     print("New client!!!")
@@ -127,6 +127,15 @@ def connect(json):
     socket = request.namespace
     p = Player(id, socket, name, [])
     game.add_player(p, id)
+
+
+@socketio.on('info')
+def info(json):
+    global game
+    print("Information from client : " + str(json))
+    id = request.namespace.socket.sessid
+    data = json.loads(json)
+    game.players[id].name = data["name"]
 
 
 @socketio.on('wyr_answer')
