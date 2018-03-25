@@ -121,7 +121,7 @@ def connect():
     global game
     # add a client
     print("New client!!!")
-    id = request.namespace.socket.sessid
+    id = request.sid
     data = json.loads(json)
     name = data["name"]
     socket = request.namespace
@@ -141,21 +141,21 @@ def info(json):
 @socketio.on('wyr_answer')
 def wyr_answer(json):
     # handle response to tp game
-    id = request.namespace.socket.sessid
+    id = request.sid
     data = json.loads(json)
 
 
 @socketio.on('team_answer')
 def team_answer(json):
     # handle team answer
-    id = request.namespace.socket.sessid
+    id = request.sid
     data = json.loads(json)
 
 
 @socketio.on('story_answer')
 def story_answer(json):
     # handle story answer
-    id = request.namespace.socket.sessid
+    id = request.sid
     data = json.loads(json)
 
 
