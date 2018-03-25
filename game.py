@@ -2,11 +2,11 @@ import random
 
 
 choose_array = [
-    ["Eat a pizza", "Get some sleep"],
-    ["Watch Harry Potter", "Watch Twilight"],
-    ["Do the Hunger Game", "Be throw in the Maze Runner"],
-    ["Express yourself only vith vowel", "Express yourself only with consonant"],
-    ["Have a bad plates everytime you go to restaurant", "Arrive at the wrong place when you go oon trip"]
+    ["Eat a pizza", "Get some sleep"]
+    # ["Watch Harry Potter", "Watch Twilight"],
+    # ["Do the Hunger Game", "Be throw in the Maze Runner"],
+    # ["Express yourself only vith vowel", "Express yourself only with consonant"],
+    # ["Have a bad plates everytime you go to restaurant", "Arrive at the wrong place when you go oon trip"]
 ]
 
 def pick_wyr_array():
@@ -71,6 +71,7 @@ class Game(object):
         self.players = {}
 
         self.wyr_answers = { "A" : "", "B": "", "nbA": 0, "nbB": 0 }
+        self.wyr_answers_v2 = []
 
     def add_player(self, player, sessionid):
         self.players[sessionid] = player
@@ -88,6 +89,9 @@ class Game(object):
 
         elif answer == "B":
             self.wyr_answers["nbB"] += 1
+
+    # def add_wyr_answer_v2(self, sid, answer):
+    #     self.wyr_answers_v2.append([ sid, answer ])
 
     def get_wyr_answer(self):
         if self.wyr_answers["nbA"] > self.wyr_answers["nbB"]:
