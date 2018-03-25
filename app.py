@@ -101,13 +101,14 @@ def process(req):
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
-        speech += "Would you rather" + choice[0] + " or " + choice[1] + str(state)
+        speech += " Would you rather" + choice[0] + " or " + choice[1] + str(state)
         emit('wyr_ask', None)
         state = State.WYR_WAIT
 
     elif state == State.WYR_WAIT and intent == "round_end":
-        speech = "Losers are John and Levin."
-        speech += "Say next round to start a new round." + str(state)
+        speech = game.get_wyr_answer()
+        # speech = "Losers are John and Levin."
+        speech += " Say next round to start a new round." + str(state)
         state = State.WAIT_NEW_ROUND
 
     else:
@@ -143,9 +144,11 @@ def wyr_answer(json):
     # handle response to WYR game
     id = request.sid
 
-    # { "player": "choice" }
+    # { "answer": "choice" }
     data = json.loads(json)
-
+    answer = data["answer"]
+    print("received ", answer)
+    game.add_wyr_answer(answer)
 
 @socketio.on('team_answer')
 def team_answer(json):
