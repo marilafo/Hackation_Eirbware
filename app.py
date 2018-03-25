@@ -101,8 +101,14 @@ def process(req):
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
+        # Save choices
+        game.update_wyr_choice(choice[0], choice[1])
+
         speech += " Would you rather" + choice[0] + " or " + choice[1] + str(state)
-        emit('wyr_ask', None)
+
+        # Sends choices to client
+        emit('wyr_ask', {"A": choice[0], "B": choice[1]})
+
         state = State.WYR_WAIT
 
     elif state == State.WYR_WAIT and intent == "round_end":
