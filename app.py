@@ -102,7 +102,8 @@ def process(req):
         speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
         speech += "Would you rather" + choice[0] + " or " + choice[1] + str(state)
-        emit('wyr_ask', None)
+        choices = {"choice1": choice[0], "choice2": choice[1]}
+        emit('wyr_ask', choices)
         state = State.WYR_WAIT
 
     elif state == State.WYR_WAIT and intent == "round_end":
