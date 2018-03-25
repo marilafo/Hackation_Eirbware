@@ -132,8 +132,7 @@ def info(json):
     global game
     print("Information from client : " + str(json))
     id = request.sid
-    data = json.loads(json)
-    game.players[id].name = data["name"]
+    game.players[id].name = json["name"]
 
 
 @socketio.on('wyr_answer')
