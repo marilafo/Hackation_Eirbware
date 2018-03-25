@@ -31,7 +31,7 @@ def sendEvent():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
-    print "coucou"
+    print("coucou")
     print(json.dumps(req, indent=4))
 
     # Processes intent
