@@ -34,7 +34,7 @@ export default class Form extends Component {
       this.state = {
         name: 'Patxi',
         first : 'I am blue',
-        second : 'Da boo dee',
+        second : 'Da boo dee da boo da',
         third : 'Unicorn',
         fourth : 'white and blue',
         fifth : 'Student in Enseirb',
@@ -98,8 +98,22 @@ export default class Form extends Component {
 
       socket.once("connect", () => {
           console.log("connected");
-          socket.emit("info", this.state);
-          // go to mini games
+          socket.emit("info", {
+            name: this.state.name,
+            clues: [
+              this.state.first,
+              this.state.second,
+              this.state.third,
+              this.state.fourth,
+              this.state.fifth,
+              this.state.hair,
+              this.state.eyes,
+              this.state.sex
+            ]
+          });
+          this.props.navigation.navigate('Wait',{
+            socket: socket,
+          })
         }
       )
     }
