@@ -3,6 +3,7 @@ import json
 import os
 import sys
 
+from multiprocessing import Process
 
 from flask import Flask
 from flask import request
@@ -46,8 +47,6 @@ def processRequest(req):
     print("Response:")
     print(speech)
 
-
-
     return {
         "speech": speech,
         "displayText": speech,
@@ -55,15 +54,25 @@ def processRequest(req):
         # "contextOut": [],
     }
 
+
 def processAction(action):
     code = action.pop(0)
 
     if code == WOULD_YOU_RATHER:
 
 
+def start_game():
+    print("Game started")
+    sendEvent()
+
 
 if __name__ == '__main__':
     print("hey")
-    app.run(debug=True, use_reloader=True)
-    print("coucou")
     sendEvent()
+
+    p = Process(target=start_game, args=())
+    p.start()
+    app.run(debug=True, use_reloader=False)
+    p.join()
+
+    print("coucou")
