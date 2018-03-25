@@ -86,7 +86,7 @@ class Game(object):
         if answer == "A":
             self.wyr_answers["nbA"] += 1
 
-        else if answer == "B":
+        elif answer == "B":
             self.wyr_answers["nbB"] += 1
 
     def get_wyr_answer(self):
