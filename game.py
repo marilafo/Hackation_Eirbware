@@ -84,10 +84,10 @@ class Game(object):
     # Saves player answer to Would You Rather
     def add_wyr_answer(self, answer):
         if answer == "A":
-            self.wyr_answers["nbA"]++
+            self.wyr_answers["nbA"] += 1
 
         else if answer == "B":
-            self.wyr_answers["nbB"]++
+            self.wyr_answers["nbB"] += 1
 
     def get_wyr_answer(self):
         if self.wyr_answers["nbA"] > self.wyr_answers["nbB"]:
