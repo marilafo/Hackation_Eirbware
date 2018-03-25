@@ -44,10 +44,12 @@ def process(req):
     intent = req["result"]["metadata"]["intentName"]
 
     if state == State.WAIT_PLAYERS and intent == "start_playing":
+        print("STATE: WAIT PLAYERS")
         speech = "Say next game to start a round." + str(state)
         state = State.WAIT_NEW_ROUND
 
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
+        print("STATE: WAIT NEW ROUND")
         speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
         # Save choices
@@ -61,6 +63,8 @@ def process(req):
         state = State.WYR_WAIT
 
     elif state == State.WYR_WAIT and intent == "round_end":
+        print("STATE: WAIT WYR WAIT")
+
         speech = game.get_wyr_answer()
         speech += " Punishment for all losers: " + get_gage()
         speech += " Say next round to start a new round." + str(state)
