@@ -33,14 +33,13 @@ def webhook():
     sendEvent()
     req = request.get_json(silent=True, force=True)
 
-    # print("Request:")
-    # print(json.dumps(req, indent=4))
+    print(json.dumps(req, indent=4))
+
+    # Processes intent
+    # intent =
 
     res = processRequest(req)
     res = json.dumps(res, indent=4)
-    print(res)
-    # Processes intent
-    # intent =
 
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
