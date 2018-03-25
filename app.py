@@ -93,9 +93,10 @@ def process(req):
     global state
     speech = ""
     intent = req["result"]["metadata"]["intentName"]
-    
+
     if state == State.WAIT_PLAYERS and intent == "start_playing":
         speech = "Say next game to start a round." + str(state)
+        state = State.WAIT_NEW_ROUND
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
