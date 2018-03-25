@@ -2,7 +2,7 @@ import random
 
 
 choose_array = [
-    ["Eat a pizza", "Get some sleep"]
+    ["Eat a pizza", "Get some sleep"],
     ["Watch Harry Potter", "Watch Twilight"],
     ["Do the Hunger Game", "Be throw in the Maze Runner"],
     ["Express yourself only vith vowel", "Express yourself only with consonant"],
@@ -96,5 +96,5 @@ class Game(object):
         elif self.wyr_answers["nbA"] < self.wyr_answers["nbB"]:
             return self.wyr_answers["B"]
 
-        else
+        else:
             return "It's a draw!"
