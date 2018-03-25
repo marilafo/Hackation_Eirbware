@@ -46,8 +46,6 @@ def processRequest(req):
     print("Response:")
     print(speech)
 
-
-
     return {
         "speech": speech,
         "displayText": speech,
@@ -55,9 +53,9 @@ def processRequest(req):
         # "contextOut": [],
     }
 
+
 def processAction(action):
     code = action.pop(0)
-
 
 
 def start_game():
@@ -68,5 +66,5 @@ def start_game():
 if __name__ == '__main__':
     p = Process(target=start_game, args=())
     p.start()
-    app.run(debug=True, use_reloader=True)
-
+    app.run(debug=True, use_reloader=False)
+    p.join()
