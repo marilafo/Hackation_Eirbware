@@ -3,6 +3,7 @@ import json
 import os
 import sys
 
+from multiprocessing import Process
 
 from flask import Flask
 from flask import request
@@ -53,7 +54,13 @@ def processRequest(req):
     }
 
 
-if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True)
-    print "coucou"
+def start_game():
+    print("Game started")
     sendEvent()
+
+
+if __name__ == '__main__':
+    p = Process(target=start_game, args=())
+    p.start()
+    app.run(debug=True, use_reloader=True)
+
