@@ -122,10 +122,8 @@ def connect():
     # add a client
     print("New client!!!")
     id = request.sid
-    data = json.loads(json)
-    name = data["name"]
     socket = request.namespace
-    p = Player(id, socket, name, [])
+    p = Player(id, socket, "", [])
     game.add_player(p, id)
 
 
