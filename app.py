@@ -131,7 +131,7 @@ def connect():
 def info(json):
     global game
     print("Information from client : " + str(json))
-    id = request.namespace.socket.sessid
+    id = request.sid
     data = json.loads(json)
     game.players[id].name = data["name"]
 
