@@ -36,7 +36,7 @@ export default class Wait extends Component {
     }
 
     return (
-      <View>
+      <View style = {{flex:1}}>
         <View style = {styles.loading}>
           <Text style = {styles.text}>Would you rather ?</Text>
         </View>

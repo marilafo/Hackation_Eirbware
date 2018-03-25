@@ -6,7 +6,7 @@ export default class TextButton extends Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
+      <View style={{flex:3}}>
         <TouchableHighlight
           underlayColor="#4189fc"
           onPress={this.props.onPress}
