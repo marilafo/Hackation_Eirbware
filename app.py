@@ -93,17 +93,18 @@ def process(req):
     global state
     speech = ""
     intent = req["result"]["metadata"]["intentName"]
+    
     if state == State.WAIT_PLAYERS and intent == "start_playing":
-        speech = "Say next game to start a round." + state
+        speech = "Say next game to start a round." + str(state)
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
-        speech = "A new round of the game Would You Rather will start!" + state
+        speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
-        speech += "What would you prefer between" + choice[0] + " and " + choice[1] + state
+        speech += "What would you prefer between" + choice[0] + " and " + choice[1] + str(state)
         emit('wyr_ask', None)
         state = State.WYR_WAIT
     elif state == State.WYR_WAIT and intent == "round_end":
         speech = "Losers are John and Levin."
-        speech += "Say next round to start a new round." + state
+        speech += "Say next round to start a new round." + str(state)
         state = State.WAIT_NEW_ROUND
     else:
         speech = "Query not understood."
