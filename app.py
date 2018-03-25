@@ -38,56 +38,56 @@ def webhook():
     return r
 
 
-def processRequest(req):
+# def processRequest(req):
+#
+#     speech = ""
+#
+#     # Processes intent
+#     intent = req["result"]["metadata"]["intentName"]
+#
+#     if intent == 'start_playing' or intent == 'next_game':
+#         action = getAction()
+#         speech = processAction(action)
+#
+#     print("Response:")
+#     print(speech)
+#     return {
+#         "speech": speech,
+#         "displayText": speech,
+#         # "data": data,
+#         # "contextOut": [],
+#     }
 
-    speech = ""
-
-    # Processes intent
-    intent = req["result"]["metadata"]["intentName"]
-
-    if intent == 'start_playing' or intent == 'next_game':
-        action = getAction()
-        speech = processAction(action)
-
-    print("Response:")
-    print(speech)
-    return {
-        "speech": speech,
-        "displayText": speech,
-        # "data": data,
-        # "contextOut": [],
-    }
-
-def getAction():
-    # TODO query server to get the next action
-    return [1, 1, "Eat a pizza", "Get some sleep"]
-
-def processAction(action):
-    code = action.pop(0)
-
-    # Game
-    if code == 1:
-        game = action.pop(0)
-
-        if game == WOULD_YOU_RATHER:
-            a = action.pop(0)
-            b = action.pop(0)
-            return "Would you rather " + a + " or " + b + "?"
-
-        if game == SUITCASE:
-            # TODO treat parameters
-            return "In my suitcase there is..."
-
-        if game == COLLECTIVE:
-            # TODO treat parameters
-            return "Collective game"
-
-    elif code == 2:
-        return "Gage"
-
-    else:
-        return "Eat pizza"
-
+# def getAction():
+#     # TODO query server to get the next action
+#     return [1, 1, "Eat a pizza", "Get some sleep"]
+# 
+# def processAction(action):
+#     code = action.pop(0)
+#
+#     # Game
+#     if code == 1:
+#         game = action.pop(0)
+#
+#         if game == WOULD_YOU_RATHER:
+#             a = action.pop(0)
+#             b = action.pop(0)
+#             return "Would you rather " + a + " or " + b + "?"
+#
+#         if game == SUITCASE:
+#             # TODO treat parameters
+#             return "In my suitcase there is..."
+#
+#         if game == COLLECTIVE:
+#             # TODO treat parameters
+#             return "Collective game"
+#
+#     elif code == 2:
+#         return "Gage"
+#
+#     else:
+#         return "Eat pizza"
+#
 
 def process(req):
     global state
@@ -97,16 +97,19 @@ def process(req):
     if state == State.WAIT_PLAYERS and intent == "start_playing":
         speech = "Say next game to start a round." + str(state)
         state = State.WAIT_NEW_ROUND
+
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         speech = "A new round of the game Would You Rather will start!" + str(state)
         choice = pick_wyr_array()
         speech += "Would you rather" + choice[0] + " or " + choice[1] + str(state)
         emit('wyr_ask', None)
         state = State.WYR_WAIT
+
     elif state == State.WYR_WAIT and intent == "round_end":
         speech = "Losers are John and Levin."
         speech += "Say next round to start a new round." + str(state)
         state = State.WAIT_NEW_ROUND
+
     else:
         speech = "Query not understood."
 
