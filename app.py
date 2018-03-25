@@ -46,9 +46,9 @@ def processRequest(req):
     speech = "Hey"
 
     # Processes intent
-    intent = req["metadata"]["intentName"];
+    intent = req["metadata"]["intentName"]
     print(intent)
-    if intent == "start_playing" or intent == "next_game":
+    if (intent == "start_playing") or (intent == "next_game"):
         speech = "Play game"
 
     print("Response:")
