@@ -3,29 +3,20 @@ import json
 import os
 import sys
 
-from multiprocessing import Process
+from threading import Thread
 
-from flask import Flask
+from flask import Flask, render_template
 from flask import request
 from flask import make_response
+from flask_socketio import SocketIO
+from flask_socketio import send, emit
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
 WOULD_YOU_RATHER = 1
 
-def sendEvent():
-    ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
-
-    event = apiai.events.Event("PLAYER_JOINED")
-    request = ai.event_request(event)
-
-    request.lang = 'en'
-    request.session_id = "iefifhufhjfndsiff"
-
-    response = request.getresponse()
-    print (response.read())
-    return response.read()
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -58,21 +49,42 @@ def processRequest(req):
 def processAction(action):
     code = action.pop(0)
 
-    if code == WOULD_YOU_RATHER:
+    #if code == WOULD_YOU_RATHER:
 
+
+@socketio.on('connect')
+def connect(json):
+    # add a client
+    data = json.loads(json)
+
+
+@socketio.on('team_answer')
+def team_answer(json):
+    # handle team answer
+    data = json.loads(json)
+
+
+@socketio.on('story_answer')
+def story_answer(json):
+    # handle story answer
+    data = json.loads(json)
+
+@socketio.on('tp_answer')
+def tp_answer(json):
+    # handle response to tp game
+    data = json.loads(json)
 
 def start_game():
     print("Game started")
-    sendEvent()
+    i = 0
+    while(True):
+        i += 1
+        if i == 10000:
+            print("ok" + i)
 
 
 if __name__ == '__main__':
-    print("hey")
-    sendEvent()
-
-    p = Process(target=start_game, args=())
-    p.start()
-    app.run(debug=True, use_reloader=False)
-    p.join()
-
-    print("coucou")
+    t = Thread(target=start_game, args=())
+    t.start()
+    socketio.run(app)
+    t.join()
