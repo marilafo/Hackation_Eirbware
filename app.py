@@ -38,7 +38,7 @@ def webhook():
 
     res = processRequest(req)
     res = json.dumps(res, indent=4)
-
+    print(res)
     # Processes intent
     # intent =
 
