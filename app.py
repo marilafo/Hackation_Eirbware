@@ -15,6 +15,7 @@ CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
 WOULD_YOU_RATHER = 1
 
 def sendEvent():
+    print("event")
     ai = apiai.ApiAI(CLIENT_ACCESS_TOKEN)
 
     event = apiai.events.Event("PLAYER_JOINED")
@@ -29,6 +30,7 @@ def sendEvent():
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    sendEvent()
     req = request.get_json(silent=True, force=True)
 
     print("Request:")
