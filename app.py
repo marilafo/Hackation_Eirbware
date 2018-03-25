@@ -31,7 +31,6 @@ def sendEvent():
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
-    print("coucou")
     print(json.dumps(req, indent=4))
 
     res = processRequest(req)
@@ -46,7 +45,7 @@ def processRequest(req):
     speech = "Hey"
 
     # Processes intent
-    intent = req["metadata"]["intentName"]
+    intent = req["result"]["metadata"]["intentName"]
     print(intent)
     if intent == 'start_playing' or intent == 'next_game':
         speech = "Play game"
