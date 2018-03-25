@@ -8,27 +8,14 @@ choose_array = [
     ["Have a bad plates everytime you go to restaurant", "Arrive at the wrong place when you go oon trip"]
 ]
 
-gage_array = [
-    "You have to do 1 push-up",
-    "You have to do 2 push-up",
-    "You have to do 3 push-up",
-    "You have to do 4 push-up",
-    "You have to do 5 push-up"
-]
-
-collective_array = [
-    "You have to run over the table and do 1 turn",
-    "You have to run over the table and do 2 turn",
-    "You have to run over the table and do 3 turn",
-    "You have to run over the table and do 4 turn",
-    "You have to run over the table and do 5 turn",
-    "You have to run over the table and do 6 turn"
-]
+def pick_wyr_array():
+    return choose_array[random.randint(0, len(choose_array))]
 
 class Player(object):
 
-    def __init__(self, name, clues, socket):
+    def __init__(self, id, socket, name, clues):
         self.socket = socket
+        self.id = id
         self.name = name
         self.clues = clues
         self.story_clues = []
@@ -49,7 +36,7 @@ class Player(object):
             return False
     
     def team_ready(self, players):
-        return self.team_found and players[self.team]
+        return self.team_found and players[self.team.id]
 
     def add_story(self, clue):
         self.story_clues.append(clue)
@@ -72,24 +59,18 @@ class Player(object):
 
 class State():
     WAIT_PLAYERS = 0
-    START_GAME = 1
-    CHOOSE_TEAM = 2
-
+    WAIT_NEW_ROUND = 1
+    WYR_WAIT = 2
 
 
 class Game(object):
     def __init__(self):
         self.nb_turn = 0
         self.nb_player = 0
-        self.players = []
+        self.players = {}
     
-    def add_player(self, player):
-        player.id = self.nb_player
-        self.players.append(player)
-
-    def 
+    def add_player(self, player, sessionid):
+        self.players[sessionid] = player
     
-
-
 
 
