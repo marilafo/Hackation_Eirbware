@@ -21,14 +21,15 @@ WOULD_YOU_RATHER = 1
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
-
-    print("Request:")
+    print "coucou"
     print(json.dumps(req, indent=4))
 
-    res = processRequest(req)
+    # Processes intent
+    # intent =
 
+    res = processRequest(req)
     res = json.dumps(res, indent=4)
-    print(res)
+
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -48,6 +49,8 @@ def processRequest(req):
 
 def processAction(action):
     code = action.pop(0)
+    # sendEvent()
+
 
     #if code == WOULD_YOU_RATHER:
 
@@ -69,10 +72,12 @@ def story_answer(json):
     # handle story answer
     data = json.loads(json)
 
+
 @socketio.on('tp_answer')
 def tp_answer(json):
     # handle response to tp game
     data = json.loads(json)
+
 
 def start_game():
     print("Game started")
