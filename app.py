@@ -17,15 +17,10 @@ socketio = SocketIO(app)
 CLIENT_ACCESS_TOKEN = '1724fbe91e264afdb2274fe6e5cf3226'
 WOULD_YOU_RATHER = 1
 
-
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
-    print "coucou"
     print(json.dumps(req, indent=4))
-
-    # Processes intent
-    # intent =
 
     res = processRequest(req)
     res = json.dumps(res, indent=4)
@@ -35,10 +30,17 @@ def webhook():
     return r
 
 def processRequest(req):
+
     speech = "Hey"
+
+    # Processes intent
+    intent = req["result"]["metadata"]["intentName"]
+    print(intent)
+    if intent == 'start_playing' or intent == 'next_game':
+        speech = "Play game"
+
     print("Response:")
     print(speech)
-
     return {
         "speech": speech,
         "displayText": speech,
