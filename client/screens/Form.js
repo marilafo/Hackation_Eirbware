@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View, Picker } from 'react-native';
 import { TextField } from 'react-native-material-textfield';
 import SubmitButton from '../elements/buttons/SubmitButton';
 import CancelButton from '../elements/buttons/CancelButton';
+import SocketIOClient from 'socket.io-client';
 
 export default class Form extends Component {
   static navigationOptions = {
@@ -93,6 +94,10 @@ export default class Form extends Component {
 
     onReady() {
       console.log("here you can handle connection and then navigation to the next screen");
+      socket = SocketIOClient('https://eirbware-hackathon.herokuapp.com');
+      socket.emit("connect", this.state);
+
+      console.log("connected");
     }
 
     onSubmit() {

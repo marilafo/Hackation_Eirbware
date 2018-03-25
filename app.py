@@ -120,10 +120,12 @@ def process(req):
 def connect(json):
     global game
     # add a client
+    print("New client!!!")
     id = request.namespace.socket.sessid
     data = json.loads(json)
+    name = data["name"]
     socket = request.namespace
-    p = Player(id, socket, "test", [])
+    p = Player(id, socket, name, [])
     game.add_player(p, id)
 
 
