@@ -36,7 +36,7 @@ def webhook():
 
     # Processes intent
     intent = req["metadata"]["intentName"];
-    print "intent " + intent
+    print(intent)
 
     res = processRequest(req)
     res = json.dumps(res, indent=4)
