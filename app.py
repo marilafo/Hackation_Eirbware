@@ -97,6 +97,8 @@ def process(req):
         speech = "Say next game to start a round."
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         speech = "A new round of the game Would You Rather will start!"
+        choice = pick_wyr_array()
+        speech += "What would you prefer between" + choice[0] + " and " + choice[1]
         emit('wyr_ask', None)
         state = State.WYR_WAIT
     elif state == State.WYR_WAIT and intent == "round_end":
