@@ -46,12 +46,18 @@ def processRequest(req):
     print("Response:")
     print(speech)
 
+
+
     return {
         "speech": speech,
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
     }
+
+def processAction(action):
+    code = action.pop(0)
+
 
 
 def start_game():
