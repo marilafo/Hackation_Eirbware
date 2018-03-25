@@ -47,7 +47,7 @@ def process(req):
         print("STATE: WAIT PLAYERS")
         speech = "Say next game to start a round." + str(state)
         state = State.WAIT_NEW_ROUND
-        print("PASSING IN STATE: WAIT PLAYERS")
+        print("PASSING IN STATE: WAIT NEW ROUND")
 
     elif state == State.WAIT_NEW_ROUND and intent == "next_game":
         print("STATE: WAIT NEW ROUND")
@@ -74,6 +74,7 @@ def process(req):
         print("PASSING IN STATE: NEW ROUND")
 
     else:
+        print(str(State))
         speech = "Query not understood."
 
     return {
