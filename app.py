@@ -33,13 +33,15 @@ def webhook():
     sendEvent()
     req = request.get_json(silent=True, force=True)
 
-    print("Request:")
-    print(json.dumps(req, indent=4))
+    # print("Request:")
+    # print(json.dumps(req, indent=4))
 
     res = processRequest(req)
-
     res = json.dumps(res, indent=4)
-    print(res)
+
+    # Processes intent
+    # intent =
+
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
@@ -60,21 +62,17 @@ def processRequest(req):
 def processAction(action):
     code = action.pop(0)
 
-    # if code == WOULD_YOU_RATHER:
+
+    #if code == WOULD_YOU_RATHER:
 
 
 def start_game():
     print("Game started")
-    sendEvent()
 
 
 if __name__ == '__main__':
-    print("hey")
-    sendEvent()
 
     p = Process(target=start_game, args=())
     p.start()
     app.run(debug=True, use_reloader=False)
     p.join()
-
-    print("coucou")
